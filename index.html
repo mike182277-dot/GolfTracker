@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Golf Tracker</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn-icons-png.flaticon.com/512/2503/2503923.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2503/2503923.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --green-50: #f0fdf4;
@@ -72,6 +77,16 @@
             max-width: 36rem;
             margin: auto;
         }
+        
+        .app-title {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--white);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
 
         .header-content .date-input,
         .header-content .player-input {
@@ -124,7 +139,7 @@
             border-bottom: 1px solid var(--gray-200);
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             position: sticky;
-            top: 100px;
+            top: 130px; /* Adjusted for new title */
             z-index: 10;
         }
 
@@ -514,7 +529,7 @@
                 padding: 0.75rem;
             }
             .nine-selector {
-                top: 85px; /* Adjust sticky top position */
+                top: 115px; /* Adjust sticky top position */
             }
             .main-content {
                 padding: 0.75rem;
@@ -540,6 +555,7 @@
         <div id="game-screen">
             <header class="app-header">
                 <div class="header-content">
+                    <h1 class="app-title">Golf Tracker</h1>
                     <div style="text-align: center; font-size: 0.875rem; margin-bottom: 0.5rem; opacity: 0.9;">Дата игры</div>
                     <input type="date" id="gameDate" class="date-input">
                     <div class="player-inputs">
@@ -635,7 +651,7 @@
                     </div>
                     
                     <div style="text-align: center; color: var(--gray-500); font-size: 0.75rem; padding-top: 1.5rem;">
-                        ©Евагений Славянский, 13.10.2025
+                        ©Евгений Славянский, 13.10.2025
                     </div>
                 </div>
             </div>
@@ -1077,10 +1093,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
 
