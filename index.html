@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Golf Tracker</title>
 
-    <!-- Инструкции для Web App -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Golf Tracker">
     <meta name="theme-color" content="#16a34a">
     
-    <!-- Детализированный лого для вкладок браузера -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' rx='12' ry='12' fill='%2316a34a'/%3E%3Cg fill='white' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M43 14 L43 40 M43 28 L52 24 L43 20' stroke='white' stroke-width='2' fill='none'/%3E%3Cpath d='M38 40 C 38 37, 50 37, 50 40 A 6 3 0 0 1 38 40 Z' /%3E%3Cpath d='M16 14 C 14.343 14 13 15.343 13 17 L 13 32 C 13 33.657 14.343 35 16 35 L 29 35 C 30.657 35 32 33.657 32 32 L 32 17 C 32 15.343 30.657 14 29 14 L 16 14 Z M 17 20 L 19 22 L 23 18 M 17 26 L 28 26 M 17 30 L 24 30' stroke='white' stroke-width='2' fill='none' /%3E%3Ccircle cx='25' cy='41' r='10'/%3E%3Cg fill='%2316a34a' transform='translate(25, 41)'%3E%3Ccircle cx='0' cy='0' r='1'/%3E%3Ccircle cx='-5' cy='0' r='1'/%3E%3Ccircle cx='5' cy='0' r='1'/%3E%3Ccircle cx='0' cy='-5' r='1'/%3E%3Ccircle cx='0' cy='5' r='1'/%3E%3Ccircle cx='-3.5' cy='-3.5' r='1'/%3E%3Ccircle cx='3.5' cy='3.5' r='1'/%3E%3Ccircle cx='3.5' cy='-3.5' r='1'/%3E%3Ccircle cx='-3.5' cy='3.5' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
-    <!-- Простая иконка "GT" для рабочего стола Apple -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' rx='22' fill='%2316a34a' /%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='-apple-system, BlinkMacSystemFont, sans-serif' font-size='50' font-weight='bold' fill='white'%3EGT%3C/text%3E%3C/svg%3E">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -264,9 +261,16 @@
         }
         
         .par-cell {
-             padding: 0.5rem;
-             font-weight: 700;
-             font-size: 1.125rem;
+              padding: 0.5rem;
+              font-weight: 700;
+              font-size: 1.125rem;
+        }
+        
+        /* СТИЛЬ ДЛЯ ПОДСКАЗКИ PAR */
+        .par-cell-placeholder {
+            color: var(--gray-400);
+            font-weight: 600;
+            opacity: 0.8;
         }
 
         .par-cell:hover {
@@ -478,9 +482,9 @@
 
         .final-scorecard-table th:first-child,
         .final-scorecard-table td:first-child {
-             width: 20%;
-             text-align: left;
-             padding-left: 0.5rem;
+              width: 20%;
+              text-align: left;
+              padding-left: 0.5rem;
         }
         
         .final-scorecard-table th {
@@ -500,7 +504,7 @@
         }
 
         .final-scorecard-table .total-header {
-             background-color: var(--gray-400);
+              background-color: var(--gray-400);
         }
 
         .final-scorecard-table .par-row { background-color: var(--blue-50); }
@@ -585,19 +589,15 @@
         <div id="game-screen">
             <header class="app-header">
                 <div class="header-content">
-                    <!-- Логотип заменен на SVG -->
                     <div class="title-container">
                         <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" class="app-logo">
                             <rect width="60" height="60" rx="12" ry="12" fill="#16a34a"/>
                             <g fill="white" stroke-linecap="round" stroke-linejoin="round">
-                                <!-- Flag & Hole -->
                                 <path d="M43 14 L43 40 M43 28 L52 24 L43 20" stroke="white" stroke-width="2" fill="none"/>
                                 <path d="M38 40 C 38 37, 50 37, 50 40 A 6 3 0 0 1 38 40 Z" />
-                        
-                                <!-- Scorecard -->
+                            
                                 <path d="M16 14 C 14.343 14 13 15.343 13 17 L 13 32 C 13 33.657 14.343 35 16 35 L 29 35 C 30.657 35 32 33.657 32 32 L 32 17 C 32 15.343 30.657 14 29 14 L 16 14 Z M 17 20 L 19 22 L 23 18 M 17 26 L 28 26 M 17 30 L 24 30" stroke="white" stroke-width="2" fill="none" />
-                        
-                                <!-- Golf Ball -->
+                            
                                 <circle cx="25" cy="41" r="10"/>
                                 <g fill="#16a34a" transform="translate(25, 41)">
                                     <circle cx="0" cy="0" r="1"/>
@@ -639,38 +639,36 @@
                             </tr>
                         </thead>
                         <tbody id="scorecard-body">
-                            <!-- Rows will be generated by JavaScript -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
 
                 <div class="card totals-card" id="totals-card">
-                    <!-- Totals will be generated by JavaScript -->
-                </div>
+                    </div>
 
                 <div class="card legend-card">
                      <div class="legend-title">Цветовая шкала:</div>
                      <div class="legend-grid">
-                        <div class="legend-item">
-                            <div class="legend-color-box" style="background-color: var(--red-500);"></div>
-                            <span>Пар -1 (Birdie)</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color-box" style="background-color: var(--blue-500);"></div>
-                            <span>Пар (Par)</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color-box" style="background-color: var(--green-500);"></div>
-                            <span>Пар +1 (Bogey)</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color-box" style="background-color: var(--gray-500);"></div>
-                            <span>Пар +2 (Double)</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color-box" style="background-color: var(--black);"></div>
-                            <span>Пар +3+ (Triple+)</span>
-                        </div>
+                         <div class="legend-item">
+                             <div class="legend-color-box" style="background-color: var(--red-500);"></div>
+                             <span>Пар -1 (Birdie)</span>
+                         </div>
+                         <div class="legend-item">
+                             <div class="legend-color-box" style="background-color: var(--blue-500);"></div>
+                             <span>Пар (Par)</span>
+                         </div>
+                         <div class="legend-item">
+                             <div class="legend-color-box" style="background-color: var(--green-500);"></div>
+                             <span>Пар +1 (Bogey)</span>
+                         </div>
+                         <div class="legend-item">
+                             <div class="legend-color-box" style="background-color: var(--gray-500);"></div>
+                             <span>Пар +2 (Double)</span>
+                         </div>
+                         <div class="legend-item">
+                             <div class="legend-color-box" style="background-color: var(--black);"></div>
+                             <span>Пар +3+ (Triple+)</span>
+                         </div>
                     </div>
                 </div>
 
@@ -682,57 +680,52 @@
 
         <div id="email-screen" class="hidden">
              <div class="email-screen-container">
-                <div class="container">
-                    <div id="scorecard-capture-area" style="padding: 1rem; background-color: var(--white); border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);">
-                        <!-- Логотип заменен на SVG -->
-                        <div style="text-align: center; margin-bottom: 1rem;">
-                            <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="width: 60px; height: 60px; border-radius: 8px;">
-                                <rect width="60" height="60" rx="12" ry="12" fill="#16a34a"/>
-                                <g fill="white" stroke-linecap="round" stroke-linejoin="round">
-                                    <!-- Flag & Hole -->
-                                    <path d="M43 14 L43 40 M43 28 L52 24 L43 20" stroke="white" stroke-width="2" fill="none"/>
-                                    <path d="M38 40 C 38 37, 50 37, 50 40 A 6 3 0 0 1 38 40 Z" />
-                            
-                                    <!-- Scorecard -->
-                                    <path d="M16 14 C 14.343 14 13 15.343 13 17 L 13 32 C 13 33.657 14.343 35 16 35 L 29 35 C 30.657 35 32 33.657 32 32 L 32 17 C 32 15.343 30.657 14 29 14 L 16 14 Z M 17 20 L 19 22 L 23 18 M 17 26 L 28 26 M 17 30 L 24 30" stroke="white" stroke-width="2" fill="none" />
-                            
-                                    <!-- Golf Ball -->
-                                    <circle cx="25" cy="41" r="10"/>
-                                    <g fill="#16a34a" transform="translate(25, 41)">
-                                        <circle cx="0" cy="0" r="1"/>
-                                        <circle cx="-5" cy="0" r="1"/><circle cx="5" cy="0" r="1"/>
-                                        <circle cx="0" cy="-5" r="1"/><circle cx="0" cy="5" r="1"/>
-                                        <circle cx="-3.5" cy="-3.5" r="1"/><circle cx="3.5" cy="3.5" r="1"/>
-                                        <circle cx="3.5" cy="-3.5" r="1"/><circle cx="-3.5" cy="3.5" r="1"/>
-                                    </g>
-                                </g>
-                            </svg>
-                        </div>
-                        <h2 class="email-title">Scorecard</h2>
-                        <div id="final-game-date" style="text-align: center; color: var(--gray-600); margin-top: -1rem; margin-bottom: 1rem; font-weight: 600;"></div>
-                        <div id="final-scorecard-tables-container">
-                            <!-- Final tables will be generated by JavaScript -->
-                        </div>
-                        <div id="final-summary-legend"></div>
-                    </div>
-                    
-                    <div class="share-button-container">
-                        <button id="share-btn" class="action-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-                            Поделиться
-                        </button>
-                        <button id="download-btn" class="action-button download-button">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            Сохранить Scorecard
-                        </button>
-                        <button id="back-to-game-btn" class="back-button">Назад к игре</button>
-                    </div>
-                    
-                    <div style="text-align: center; color: var(--gray-500); font-size: 0.75rem; padding-top: 1.5rem;">
-                        ©Евгений Славянский, 13.10.2025
-                    </div>
-                </div>
-            </div>
+                 <div class="container">
+                     <div id="scorecard-capture-area" style="padding: 1rem; background-color: var(--white); border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);">
+                         <div style="text-align: center; margin-bottom: 1rem;">
+                             <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="width: 60px; height: 60px; border-radius: 8px;">
+                                 <rect width="60" height="60" rx="12" ry="12" fill="#16a34a"/>
+                                 <g fill="white" stroke-linecap="round" stroke-linejoin="round">
+                                     <path d="M43 14 L43 40 M43 28 L52 24 L43 20" stroke="white" stroke-width="2" fill="none"/>
+                                     <path d="M38 40 C 38 37, 50 37, 50 40 A 6 3 0 0 1 38 40 Z" />
+                                
+                                     <path d="M16 14 C 14.343 14 13 15.343 13 17 L 13 32 C 13 33.657 14.343 35 16 35 L 29 35 C 30.657 35 32 33.657 32 32 L 32 17 C 32 15.343 30.657 14 29 14 L 16 14 Z M 17 20 L 19 22 L 23 18 M 17 26 L 28 26 M 17 30 L 24 30" stroke="white" stroke-width="2" fill="none" />
+                                
+                                     <circle cx="25" cy="41" r="10"/>
+                                     <g fill="#16a34a" transform="translate(25, 41)">
+                                         <circle cx="0" cy="0" r="1"/>
+                                         <circle cx="-5" cy="0" r="1"/><circle cx="5" cy="0" r="1"/>
+                                         <circle cx="0" cy="-5" r="1"/><circle cx="0" cy="5" r="1"/>
+                                         <circle cx="-3.5" cy="-3.5" r="1"/><circle cx="3.5" cy="3.5" r="1"/>
+                                         <circle cx="3.5" cy="-3.5" r="1"/><circle cx="-3.5" cy="3.5" r="1"/>
+                                     </g>
+                                 </g>
+                             </svg>
+                         </div>
+                         <h2 class="email-title">Scorecard</h2>
+                         <div id="final-game-date" style="text-align: center; color: var(--gray-600); margin-top: -1rem; margin-bottom: 1rem; font-weight: 600;"></div>
+                         <div id="final-scorecard-tables-container">
+                             </div>
+                         <div id="final-summary-legend"></div>
+                     </div>
+                     
+                     <div class="share-button-container">
+                         <button id="share-btn" class="action-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                             Поделиться
+                         </button>
+                         <button id="download-btn" class="action-button download-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                             Сохранить Scorecard
+                         </button>
+                         <button id="back-to-game-btn" class="back-button">Назад к игре</button>
+                     </div>
+                     
+                     <div style="text-align: center; color: var(--gray-500); font-size: 0.75rem; padding-top: 1.5rem;">
+                         ©Евгений Славянский, 13.10.2025
+                     </div>
+                 </div>
+             </div>
         </div>
     </div>
 
@@ -761,8 +754,7 @@
                 </button>
             </div>
             <div id="number-selector-grid" class="number-grid">
-                <!-- Buttons will be generated by JavaScript -->
-            </div>
+                </div>
         </div>
     </div>
 
@@ -773,7 +765,8 @@
             player1Name: '',
             player2Name: '',
             gameDate: new Date().toISOString().split('T')[0],
-            parValues: [4, 3, 5, 4, 4, 3, 5, 4, 4, 4, 3, 5, 4, 4, 3, 5, 4, 4],
+            // ИЗМЕНЕНИЕ 1: Изначально все значения Par равны null (не заданы)
+            parValues: Array(18).fill(null),
             scores: {
                 player1: Array(18).fill(null),
                 player2: Array(18).fill(null)
@@ -811,7 +804,7 @@
         // --- UTILITY FUNCTIONS ---
         const calculateTotal = (playerScores) => playerScores.reduce((sum, score) => sum + (score || 0), 0);
         const getScoreColorClass = (score, par) => {
-            if (!score) return 'score-default';
+            if (!score || !par) return 'score-default';
             const diff = score - par;
             if (diff === -1) return 'score-birdie';
             if (diff === 0) return 'score-par';
@@ -846,10 +839,16 @@
 
             for (let i = startHole; i < endHole; i++) {
                 const row = document.createElement('tr');
+                
+                // ИЗМЕНЕНИЕ 2: Логика для отображения либо числа, либо подсказки "PAR"
+                const parValue = state.parValues[i];
+                const parCellContent = parValue !== null ? parValue : 'PAR';
+                const parCellClass = parValue !== null ? '' : 'par-cell-placeholder';
+                
                 row.innerHTML = `
                     <td style="background-color: var(--purple-100); font-weight: 700;">${i + 1}</td>
                     <td style="background-color: var(--indigo-50);">
-                        <div class="par-cell" onclick="openParSelector(${i})">${state.parValues[i]}</div>
+                        <div class="par-cell ${parCellClass}" onclick="openParSelector(${i})">${parCellContent}</div>
                     </td>
                     <td>
                         <div class="score-cell ${getScoreColorClass(state.scores.player1[i], state.parValues[i])}" onclick="openNumberSelector('player1', ${i})">
@@ -932,7 +931,7 @@
                     <tbody>
                         <tr class="par-row">
                             <td style="font-weight: 700;">Par</td>
-                            ${state.parValues.slice(0, 9).map(p => `<td class="par-cell-final">${p}</td>`).join('')}
+                            ${state.parValues.slice(0, 9).map(p => `<td class="par-cell-final">${p !== null ? p : '-'}</td>`).join('')}
                             <td class="out-in-total">${parOut}</td>
                         </tr>
                         <tr>
@@ -961,7 +960,7 @@
                     <tbody>
                         <tr class="par-row">
                             <td style="font-weight: 700;">Par</td>
-                            ${state.parValues.slice(9, 18).map(p => `<td class="par-cell-final">${p}</td>`).join('')}
+                            ${state.parValues.slice(9, 18).map(p => `<td class="par-cell-final">${p !== null ? p : '-'}</td>`).join('')}
                             <td class="out-in-total">${parIn}</td>
                             <td class="grand-total">${parOut + parIn}</td>
                         </tr>
@@ -989,23 +988,23 @@
             const p2TotalToPar = p2Total - totalPar;
             dom.finalSummaryLegend.innerHTML = `
                  <div class="card totals-card" style="margin-top: 1rem;">
-                    <div>
-                        <div class="score-display player1-score">${p1TotalToPar > 0 ? '+' : ''}${p1TotalToPar}</div>
-                        <div class="player-name">${state.player1Name || 'Игрок 1'} (к пару)</div>
-                    </div>
-                    <div>
-                        <div class="score-display player2-score">${p2TotalToPar > 0 ? '+' : ''}${p2TotalToPar}</div>
-                        <div class="player-name">${state.player2Name || 'Игрок 2'} (к пару)</div>
-                    </div>
+                     <div>
+                         <div class="score-display player1-score">${p1TotalToPar > 0 ? '+' : ''}${p1TotalToPar}</div>
+                         <div class="player-name">${state.player1Name || 'Игрок 1'} (к пару)</div>
+                     </div>
+                     <div>
+                         <div class="score-display player2-score">${p2TotalToPar > 0 ? '+' : ''}${p2TotalToPar}</div>
+                         <div class="player-name">${state.player2Name || 'Игрок 2'} (к пару)</div>
+                     </div>
                  </div>
                  <div class="card legend-card" style="margin-top: 1rem;">
                      <div class="legend-title">Легенда:</div>
                      <div class="legend-grid">
-                        <div class="legend-item"><div class="legend-color-box" style="background-color: var(--red-500);"></div><span>Пар -1</span></div>
-                        <div class="legend-item"><div class="legend-color-box" style="background-color: var(--blue-500);"></div><span>Пар</span></div>
-                        <div class="legend-item"><div class="legend-color-box" style="background-color: var(--green-500);"></div><span>Пар +1</span></div>
-                        <div class="legend-item"><div class="legend-color-box" style="background-color: var(--gray-500);"></div><span>Пар +2</span></div>
-                        <div class="legend-item"><div class="legend-color-box" style="background-color: var(--black);"></div><span>Пар +3+</span></div>
+                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--red-500);"></div><span>Пар -1</span></div>
+                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--blue-500);"></div><span>Пар</span></div>
+                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--green-500);"></div><span>Пар +1</span></div>
+                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--gray-500);"></div><span>Пар +2</span></div>
+                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--black);"></div><span>Пар +3+</span></div>
                      </div>
                  </div>
             `;
@@ -1061,22 +1060,22 @@
                  const p1 = state.player1Name || 'Игрок 1';
                  const p2 = state.player2Name || 'Игрок 2';
                  const shareData = {
-                    title: `Scorecard: ${p1} vs ${p2}`,
-                    files: [file],
+                     title: `Scorecard: ${p1} vs ${p2}`,
+                     files: [file],
                  };
 
                  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                     navigator.share(shareData)
-                        .catch((error) => {
-                            console.log('Sharing failed', error);
-                            if (error.name !== 'AbortError') {
-                                console.error('Не удалось поделиться файлом. Попробуйте скачать изображение и отправить его вручную.');
-                            }
-                        })
-                        .finally(() => hideLoadingState());
+                      navigator.share(shareData)
+                          .catch((error) => {
+                              console.log('Sharing failed', error);
+                              if (error.name !== 'AbortError') {
+                                  console.error('Не удалось поделиться файлом. Попробуйте скачать изображение и отправить его вручную.');
+                              }
+                          })
+                          .finally(() => hideLoadingState());
                  } else {
-                     console.error('Ваш браузер не поддерживает отправку файлов. Скачайте изображение и поделитесь им вручную.');
-                     hideLoadingState();
+                      console.error('Ваш браузер не поддерживает отправку файлов. Скачайте изображение и поделитесь им вручную.');
+                      hideLoadingState();
                  }
             });
         }
@@ -1175,4 +1174,3 @@
     </script>
 </body>
 </html>
-
