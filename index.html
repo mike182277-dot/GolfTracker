@@ -1038,23 +1038,15 @@
         }
 
         function handleDownload() {
-            // Эта функция теперь определяет лучший способ сохранения в зависимости от устройства.
-            // На мобильных устройствах она откроет диалог "Поделиться", 
-            // что позволит сохранить изображение прямо в Фото.
-            if (navigator.canShare) {
-                handleShare('download-btn');
-            } else {
-                // На компьютерах будет предложено скачать файл как раньше.
-                showLoadingState('download-btn');
-                generateScorecardImage(blob => {
-                    const link = document.createElement('a');
-                    link.download = `scorecard-${state.gameDate}.png`;
-                    link.href = URL.createObjectURL(blob);
-                    link.click();
-                    URL.revokeObjectURL(link.href);
-                    hideLoadingState();
-                });
-            }
+            showLoadingState('download-btn');
+            generateScorecardImage(blob => {
+                const link = document.createElement('a');
+                link.download = `scorecard-${state.gameDate}.png`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+                URL.revokeObjectURL(link.href);
+                hideLoadingState();
+            });
         }
 
         function handleShare(buttonId = 'share-btn') {
@@ -1178,5 +1170,6 @@
     </script>
 </body>
 </html>
+
 
 
