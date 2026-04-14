@@ -1,1176 +1,413 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golf Tracker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Golf Tracker</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#16a34a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' rx='12' fill='%2316a34a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='28' fill='white'%3E⛳%3C/text%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+--g50:#f0fdf4;--g100:#dcfce7;--g400:#4ade80;--g500:#22c55e;--g600:#16a34a;--g700:#15803d;
+--b50:#eff6ff;--b100:#dbeafe;--b400:#60a5fa;--b500:#3b82f6;--b600:#2563eb;--b700:#1d4ed8;
+--r100:#fee2e2;--r500:#ef4444;--r600:#dc2626;
+--gr50:#f9fafb;--gr100:#f3f4f6;--gr200:#e5e7eb;--gr300:#d1d5db;--gr400:#9ca3af;--gr500:#6b7280;--gr600:#4b5563;--gr800:#1f2937;
+--p100:#f3e8ff;--p600:#9333ea;--i50:#eef2ff;--i200:#c7d2fe;--i600:#4f46e5;
+--y100:#fef9c3;--y500:#eab308;--o500:#f97316;--o600:#ea580c;--o100:#ffedd5;--a500:#f59e0b;--a600:#d97706;--a100:#fef3c7;
+--w:#fff;--bk:#000;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--gr100);padding-bottom:4rem}
+.hidden{display:none!important}
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Golf Tracker">
-    <meta name="theme-color" content="#16a34a">
-    
-    <link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' rx='12' ry='12' fill='%2316a34a'/%3E%3Cg fill='white' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M43 14 L43 40 M43 28 L52 24 L43 20' stroke='white' stroke-width='2' fill='none'/%3E%3Cpath d='M38 40 C 38 37, 50 37, 50 40 A 6 3 0 0 1 38 40 Z' /%3E%3Cpath d='M16 14 C 14.343 14 13 15.343 13 17 L 13 32 C 13 33.657 14.343 35 16 35 L 29 35 C 30.657 35 32 33.657 32 32 L 32 17 C 32 15.343 30.657 14 29 14 L 16 14 Z M 17 20 L 19 22 L 23 18 M 17 26 L 28 26 M 17 30 L 24 30' stroke='white' stroke-width='2' fill='none' /%3E%3Ccircle cx='25' cy='41' r='10'/%3E%3Cg fill='%2316a34a' transform='translate(25, 41)'%3E%3Ccircle cx='0' cy='0' r='1'/%3E%3Ccircle cx='-5' cy='0' r='1'/%3E%3Ccircle cx='5' cy='0' r='1'/%3E%3Ccircle cx='0' cy='-5' r='1'/%3E%3Ccircle cx='0' cy='5' r='1'/%3E%3Ccircle cx='-3.5' cy='-3.5' r='1'/%3E%3Ccircle cx='3.5' cy='3.5' r='1'/%3E%3Ccircle cx='3.5' cy='-3.5' r='1'/%3E%3Ccircle cx='-3.5' cy='3.5' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' rx='22' fill='%2316a34a' /%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='-apple-system, BlinkMacSystemFont, sans-serif' font-size='50' font-weight='bold' fill='white'%3EGT%3C/text%3E%3C/svg%3E">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --green-50: #f0fdf4;
-            --green-100: #dcfce7;
-            --green-400: #4ade80;
-            --green-500: #22c55e;
-            --green-600: #16a34a;
-            --green-700: #15803d;
-            --blue-50: #eff6ff;
-            --blue-100: #dbeafe;
-            --blue-400: #60a5fa;
-            --blue-500: #3b82f6;
-            --blue-600: #2563eb;
-            --blue-700: #1d4ed8;
-            --red-100: #fee2e2;
-            --red-500: #ef4444;
-            --red-600: #dc2626;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-800: #1f2937;
-            --purple-100: #f3e8ff;
-            --purple-600: #9333ea;
-            --indigo-50: #eef2ff;
-            --indigo-200: #c7d2fe;
-            --indigo-600: #4f46e5;
-            --yellow-100: #fef9c3;
-            --white: #ffffff;
-            --black: #000000;
-        }
+.hdr{background:var(--g600);color:var(--w);padding:.5rem .75rem .6rem;position:sticky;top:0;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.hdr-in{max-width:36rem;margin:auto}
+.ttl{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:.4rem}
+.ttl h1{font-family:'Poppins',sans-serif;font-size:1.5rem;text-shadow:1px 1px 2px rgba(0,0,0,.2)}
+.ttl svg{width:36px;height:36px;border-radius:.4rem}
 
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--gray-100);
-            padding-bottom: 5rem;
-        }
+.row1{display:grid;grid-template-columns:auto 1fr;gap:.4rem;margin-bottom:.35rem}
+.date-in{text-align:center;font-weight:700;border-radius:.5rem;padding:.35rem .4rem;border:2px solid rgba(255,255,255,.4);background:rgba(255,255,255,.12);color:var(--w);font-size:.85rem;width:9rem}
+.csel-w{position:relative}
+.csel{width:100%;padding:.35rem 1.8rem .35rem .6rem;border-radius:.5rem;border:2px solid rgba(255,255,255,.4);background:rgba(255,255,255,.12);color:var(--w);font-weight:600;font-size:.8rem;appearance:none;cursor:pointer}
+.csel option{color:var(--gr800);background:var(--w)}
+.csel-w::after{content:'▼';position:absolute;right:.6rem;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.6);pointer-events:none;font-size:.55rem}
+.cinfo{text-align:center;font-size:.7rem;opacity:.8;margin-bottom:.35rem;line-height:1.2}
 
-        .container {
-            max-width: 42rem;
-            margin-left: auto;
-            margin-right: auto;
-        }
+.row2{display:flex;gap:.35rem;margin-bottom:.4rem;align-items:center;justify-content:center}
+.row2 .sep{width:1px;height:1.4rem;background:rgba(255,255,255,.3);margin:0 .2rem}
+.mode-b,.pc-b{padding:.3rem .6rem;border-radius:.5rem;border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:var(--w);font-weight:600;font-size:.8rem;cursor:pointer;transition:.15s;white-space:nowrap}
+.mode-b.act,.pc-b.act{background:var(--w);color:var(--g700);border-color:var(--w)}
 
-        .hidden {
-            display: none !important;
-        }
+.players-grid{display:grid;gap:.35rem}
+.players-grid.c2{grid-template-columns:1fr 1fr}
+.players-grid.c3{grid-template-columns:1fr 1fr 1fr}
+.players-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+.p-cell{display:flex;flex-direction:column;gap:.2rem}
+.pi{width:100%;text-align:center;font-weight:700;border-radius:.5rem;padding:.3rem .2rem;border:2px solid;color:var(--w);font-size:.85rem}
+.pi::placeholder{color:rgba(255,255,255,.65);font-size:.8rem}
+.pi-1{background:var(--b500);border-color:var(--b400)}.pi-2{background:var(--g500);border-color:var(--g400)}
+.pi-3{background:var(--o500);border-color:#fb923c}.pi-4{background:var(--a500);border-color:#fbbf24}
+.hcp-in{width:100%;text-align:center;font-weight:700;border-radius:.5rem;padding:.25rem .15rem;border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:var(--w);font-size:.75rem}
+.hcp-in::placeholder{color:rgba(255,255,255,.5);font-size:.7rem}
 
-        /* App container and header */
-        .app-header {
-            background-color: var(--green-600);
-            color: var(--white);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            z-index: 20;
-        }
+.nine-sel{background:var(--w);border-bottom:1px solid var(--gr200);position:sticky;top:0;z-index:10}
+.nine-in{max-width:36rem;margin:auto;display:flex;padding:.5rem;gap:.4rem}
+.nine-in button{flex:1;padding:.6rem;font-weight:600;font-size:.85rem;border-radius:.5rem;border:none;cursor:pointer;transition:.15s}
+.nine-in button.act{background:var(--g500);color:var(--w)}.nine-in button.ina{background:var(--gr200);color:var(--gr600)}
 
-        .header-content {
-            max-width: 36rem;
-            margin: auto;
-        }
-        
-        /* Стили для контейнера заголовка и логотипа */
-        .title-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 0.75rem;
-        }
+.main{padding:.75rem;max-width:42rem;margin:auto}
+.card{background:var(--w);border-radius:.75rem;box-shadow:0 4px 12px rgba(0,0,0,.08);overflow:hidden;margin-bottom:.75rem}
 
-        .app-logo {
-            width: 40px;
-            height: 40px;
-            margin-right: 0.75rem;
-            border-radius: 0.5rem;
-        }
+.st{width:100%;border-collapse:collapse;table-layout:fixed}
+.st th,.st td{border:1px solid var(--gr300);padding:.3rem .1rem;text-align:center;font-size:.8rem}
+.st th{background:var(--gr800);color:var(--w);font-size:.6rem;padding:.4rem .05rem;white-space:nowrap;overflow:hidden}
+.st .hc{width:1.8rem;background:var(--p600)}.st .pc{width:1.8rem;background:var(--i600)}.st .sic{width:1.6rem;background:#6d28d9}
+.st tbody tr:nth-child(even){background:var(--gr50)}
 
-        .app-title {
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0; /* Убираем отступ, так как он теперь на контейнере */
-            color: var(--white);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
+.sc,.pac{cursor:pointer;border-radius:.25rem;transition:.12s}
+.pac{padding:.35rem;font-weight:700;font-size:.95rem}
+.pac:hover{background:var(--i200)}
+.pac.auto{background:rgba(79,70,229,.06)}
+.pac .ph{color:var(--gr400);font-weight:600;font-size:.7rem}
+.sc{padding:.3rem;font-weight:700;font-size:.95rem}
+.sc:hover{opacity:.9}
 
-        .header-content .date-input,
-        .header-content .player-input {
-            width: 100%;
-            text-align: center;
-            font-weight: 700;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            border: 2px solid;
-            color: var(--white);
-        }
+.fora-dots{display:block;font-size:.4rem;line-height:1;color:rgba(255,255,255,.85);letter-spacing:2px;margin-bottom:-1px}
+.sd .fora-dots{color:var(--gr500)}
+.has-fora.sd{background:var(--y100)!important;border-color:#fde68a!important}
+.stb-pts{display:block;font-size:.55rem;font-weight:600;opacity:.8;margin-top:1px}
 
-        .header-content .date-input {
-            font-size: 1.125rem;
-            background-color: var(--green-700);
-            border-color: var(--green-500);
-            margin-bottom: 0.75rem;
-        }
+.sd{background:var(--gr50);border:2px solid var(--gr200)}
+.sb{background:var(--b500);color:var(--w);border:2px solid var(--b600)}
+.sp{background:var(--g500);color:var(--w);border:2px solid var(--g600)}
+.sg{background:#92400e;color:var(--w);border:2px solid #78350f}
+.sdb{background:var(--r500);color:var(--w);border:2px solid var(--r600)}
+.str1{background:#9ca3af;color:var(--w);border:2px solid #6b7280}
+.str2{background:#6b7280;color:var(--w);border:2px solid #4b5563}
+.str3{background:#374151;color:var(--w);border:2px solid #1f2937}
+.str4{background:var(--bk);color:var(--w);border:2px solid var(--gr800)}
+.se{background:#7c3aed;color:var(--w);border:2px solid #5b21b6}
+.shi{background:linear-gradient(135deg,#fbbf24,#f59e0b,#d97706);color:var(--bk);border:2px solid #b45309;text-shadow:0 1px 2px rgba(255,255,255,.4);animation:hio 1.5s ease-in-out infinite alternate}
+@keyframes hio{0%{box-shadow:0 0 8px rgba(245,158,11,.4)}100%{box-shadow:0 0 16px rgba(245,158,11,.7)}}
 
-        .player-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-        }
+.trow{background:var(--gr800)!important;color:var(--w);font-weight:700}
 
-        #player1Name {
-            background-color: var(--blue-500);
-            border-color: var(--blue-400);
-        }
+.tc{display:grid;gap:.5rem;text-align:center;padding:.75rem}
+.tc.p2{grid-template-columns:1fr 1fr}.tc.p3{grid-template-columns:1fr 1fr 1fr}.tc.p4{grid-template-columns:1fr 1fr 1fr 1fr}
+.tc .sd2{font-size:1.8rem;font-weight:700}.tc .pn{font-size:.65rem;color:var(--gr500);margin-top:.1rem}
+.tc .tp{font-size:.75rem;font-weight:600;margin-top:.25rem}
+.tc .stb-t{font-size:.85rem;font-weight:700;margin-top:.2rem;padding:.15rem .4rem;border-radius:.25rem;display:inline-block;background:var(--y100)}
+.p1c{color:var(--b600)}.p2c{color:var(--g600)}.p3c{color:var(--o600)}.p4c{color:var(--a600)}
+.p1d{color:var(--b700)}.p2d{color:var(--g700)}.p3d{color:#c2410c}.p4d{color:#b45309}
 
-        #player2Name {
-            background-color: var(--green-500);
-            border-color: var(--green-400);
-        }
+.leg{padding:.75rem}.leg-t{font-size:.8rem;font-weight:600;margin-bottom:.5rem}
+.leg-g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem;font-size:.7rem}
+.leg-i{display:flex;align-items:center;gap:.4rem}
+.leg-c{width:1.25rem;height:1.25rem;border-radius:.2rem}
+.stb-leg{margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--gr200)}
+.stb-lg{display:grid;grid-template-columns:repeat(3,1fr);gap:.25rem;font-size:.65rem;text-align:center}
+.stb-li{padding:.2rem;border-radius:.2rem;background:var(--gr50);font-weight:600}
 
-        #player1Name.error, #player2Name.error {
-            border-color: var(--red-600);
-            background-color: var(--red-100);
-            color: var(--red-600);
-        }
+.fin-btn{width:100%;background:var(--g500);color:var(--w);padding:.85rem;border-radius:.75rem;font-weight:600;border:none;cursor:pointer;font-size:1rem;margin-top:.75rem}
+.fin-btn:hover{background:var(--g600)}
 
-        .header-content .player-input::placeholder {
-            color: var(--white);
-            opacity: 0.75;
-        }
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem}
+.mc{background:var(--w);border-radius:1rem;box-shadow:0 25px 50px rgba(0,0,0,.25);padding:1.25rem;width:100%;max-width:18rem}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
+.mt{font-size:1rem;font-weight:700;color:var(--gr800)}
+.mx{color:var(--gr400);cursor:pointer;background:none;border:none;font-size:1.5rem;line-height:1}
+.mx:hover{color:var(--gr600)}
+.ng{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem}
+.ng button{background:var(--g500);color:var(--w);font-weight:700;font-size:1.25rem;padding:1rem 0;border-radius:.5rem;border:none;cursor:pointer}
+.ng button:hover{background:var(--g600)}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+.pg button{background:var(--b500);color:var(--w);font-weight:700;font-size:1.875rem;padding:1.75rem 0;border-radius:.5rem;border:none;cursor:pointer}
+.pg button:hover{background:var(--b600)}
+.fora-info{text-align:center;margin-top:.5rem;margin-bottom:.25rem;font-size:.8rem;color:var(--g700);font-weight:600;padding:.4rem;background:var(--g50);border-radius:.5rem}
 
-        #player1Name.error::placeholder, #player2Name.error::placeholder {
-            color: var(--red-600);
-            opacity: 0.7;
-        }
+.es{min-height:100vh;background:linear-gradient(135deg,var(--g50),var(--g100));padding:1rem}
+.es-in{max-width:42rem;margin:auto}
+.cap{padding:1rem;background:var(--w);border-radius:.75rem;box-shadow:0 10px 25px rgba(0,0,0,.1)}
+.es-t{font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:700;text-align:center;color:var(--g600);margin:.5rem 0}
+.fcn{text-align:center;color:var(--gr600);font-weight:600;font-size:.85rem;margin-bottom:.25rem}
+.fst{width:100%;font-size:.65rem;border-collapse:collapse;table-layout:fixed}
+.fst th,.fst td{border:2px solid var(--gr400);padding:.3rem .05rem;text-align:center}
+.fst th:first-child,.fst td:first-child{width:12%;text-align:left;padding-left:.25rem;font-size:.55rem}
+.fst th{font-weight:700}.fst thead tr{background:var(--gr200)}
+.fst .hh{background:var(--y100)}.fst .oih{background:var(--gr300)}.fst .tth{background:var(--gr400)}
+.fst .pr{background:var(--b50)}.fst .sir{background:#f3e8ff}
+.fst .pcf{background:var(--b100);font-weight:700;font-size:.75rem}
+.fst .oit{background:var(--gr200);font-weight:700;font-size:.7rem}
+.fst .gt{background:var(--gr300);font-weight:700;font-size:.75rem}
+.p1gt{background:var(--b100)!important}.p2gt{background:var(--g100)!important}.p3gt{background:var(--o100)!important}.p4gt{background:var(--a100)!important}
 
-        /* Nine selector */
-        .nine-selector {
-            background-color: var(--white);
-            border-bottom: 1px solid var(--gray-200);
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 130px; /* Adjusted for new title */
-            z-index: 10;
-        }
-
-        .nine-selector-content {
-            max-width: 36rem;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-        }
-
-        .nine-selector-content button {
-            flex: 1;
-            padding: 0.75rem;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .nine-selector-content button.active {
-            background-color: var(--green-500);
-            color: var(--white);
-        }
-
-        .nine-selector-content button.inactive {
-            background-color: var(--gray-200);
-            color: var(--gray-600);
-        }
-
-        .nine-selector-content button:disabled {
-            cursor: not-allowed;
-        }
-
-        .nine-selector-content .spacer {
-            width: 0.5rem;
-        }
-
-        /* Main content */
-        .main-content {
-            padding: 1rem;
-        }
-
-        .card {
-            background-color: var(--white);
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .scorecard-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed; /* Prevents column width changes */
-        }
-
-        .scorecard-table th,
-        .scorecard-table td {
-            border: 1px solid var(--gray-300);
-            padding: 0.5rem;
-            text-align: center;
-        }
-
-        .scorecard-table th {
-            background-color: var(--gray-800);
-            color: var(--white);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .scorecard-table .hole-col {
-            width: 4rem;
-            background-color: var(--purple-600);
-        }
-
-        .scorecard-table .par-col {
-            width: 4rem;
-            background-color: var(--indigo-600);
-        }
-
-        .scorecard-table tbody tr:nth-child(even) {
-            background-color: var(--gray-50);
-        }
-
-        .score-cell, .par-cell {
-            cursor: pointer;
-            border-radius: 0.25rem;
-            transition: all 0.2s;
-        }
-        
-        .par-cell {
-              padding: 0.5rem;
-              font-weight: 700;
-              font-size: 1.125rem;
-        }
-        
-        /* СТИЛЬ ДЛЯ ПОДСКАЗКИ PAR */
-        .par-cell-placeholder {
-            color: var(--gray-400);
-            font-weight: 600;
-            opacity: 0.8;
-        }
-
-        .par-cell:hover {
-            background-color: var(--indigo-200);
-        }
-        
-        .score-cell {
-            padding: 0.5rem;
-            font-weight: 700;
-            font-size: 1.125rem;
-        }
-
-        .score-cell:hover {
-            opacity: 0.9;
-        }
-
-        .total-row {
-            background-color: var(--gray-800) !important;
-            color: var(--white);
-            font-weight: 700;
-        }
-
-        /* Score colors */
-        .score-default { background-color: var(--gray-50); border: 2px solid var(--gray-200); }
-        .score-birdie { background-color: var(--red-500); color: var(--white); border: 2px solid var(--red-600); }
-        .score-par { background-color: var(--blue-500); color: var(--white); border: 2px solid var(--blue-600); }
-        .score-bogey { background-color: var(--green-500); color: var(--white); border: 2px solid var(--green-600); }
-        .score-double { background-color: var(--gray-500); color: var(--white); border: 2px solid var(--gray-600); }
-        .score-triple { background-color: var(--black); color: var(--white); border: 2px solid var(--gray-800); }
-
-        /* Total Score Section */
-        .totals-card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            text-align: center;
-            padding: 1rem;
-        }
-        
-        .totals-card .score-display {
-            font-size: 2.25rem;
-            font-weight: 700;
-        }
-        
-        .totals-card .player1-score { color: var(--blue-600); }
-        .totals-card .player2-score { color: var(--green-600); }
-        .totals-card .player-name { font-size: 0.75rem; color: var(--gray-500); margin-top: 0.25rem; }
-        .totals-card .to-par { font-size: 0.875rem; font-weight: 600; margin-top: 0.5rem; }
-        .totals-card .player1-par { color: var(--blue-700); }
-        .totals-card .player2-par { color: var(--green-700); }
-
-        /* Legend */
-        .legend-card {
-            padding: 1rem;
-        }
-        .legend-title {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 0.75rem;
-        }
-        .legend-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .legend-color-box {
-            width: 1.5rem;
-            height: 1.5rem;
-            border-radius: 0.25rem;
-        }
-
-        /* Finish button */
-        .finish-button {
-            width: 100%;
-            background-color: var(--green-500);
-            color: var(--white);
-            padding: 1rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: background-color 0.2s;
-        }
-        .finish-button:hover {
-            background-color: var(--green-600);
-        }
-
-        /* Modals (Number/Par Selectors) */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-            padding: 1rem;
-        }
-        .modal-content {
-            background-color: var(--white);
-            border-radius: 1rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            padding: 1.5rem;
-            width: 100%;
-            max-width: 20rem;
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .modal-title {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--gray-800);
-        }
-        .modal-close-btn {
-            color: var(--gray-400);
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        .modal-close-btn:hover {
-            color: var(--gray-600);
-        }
-        .number-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.5rem;
-        }
-        .par-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-        .number-grid button {
-            background-color: var(--green-500);
-            color: var(--white);
-            font-weight: 700;
-            font-size: 1.25rem;
-            padding: 1rem 0;
-            border-radius: 0.5rem;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06);
-            transition: background-color 0.2s;
-        }
-        .number-grid button:hover { background-color: var(--green-600); }
-        .number-grid button:active { background-color: var(--green-700); }
-        .par-grid button {
-            background-color: var(--blue-500);
-            color: var(--white);
-            font-weight: 700;
-            font-size: 1.875rem;
-            padding: 2rem 0;
-            border-radius: 0.5rem;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06);
-            transition: background-color 0.2s;
-        }
-        .par-grid button:hover { background-color: var(--blue-600); }
-        .par-grid button:active { background-color: var(--blue-700); }
-
-        /* Email Screen */
-        .email-screen-container {
-            min-height: 100vh;
-            background-image: linear-gradient(to bottom right, var(--green-50), var(--green-100));
-            padding: 1rem;
-        }
-
-        .email-card {
-            background-color: var(--white);
-            border-radius: 0.75rem;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .email-title {
-            font-size: 1.875rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--green-600);
-        }
-        
-        .final-scorecard-table {
-            width: 100%;
-            font-size: 0.875rem;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        .final-scorecard-table th, .final-scorecard-table td {
-            border: 2px solid var(--gray-400);
-            padding: 0.5rem;
-            text-align: center;
-        }
-
-        .final-scorecard-table th:first-child,
-        .final-scorecard-table td:first-child {
-              width: 20%;
-              text-align: left;
-              padding-left: 0.5rem;
-        }
-        
-        .final-scorecard-table th {
-            font-weight: 700;
-        }
-        
-        .final-scorecard-table thead tr {
-            background-color: var(--gray-200);
-        }
-
-        .final-scorecard-table .hole-header {
-            background-color: var(--yellow-100);
-        }
-        
-        .final-scorecard-table .out-in-header {
-            background-color: var(--gray-300);
-        }
-
-        .final-scorecard-table .total-header {
-              background-color: var(--gray-400);
-        }
-
-        .final-scorecard-table .par-row { background-color: var(--blue-50); }
-        .final-scorecard-table .par-cell-final { background-color: var(--blue-100); font-weight: 700; font-size: 1.125rem;}
-        .final-scorecard-table .out-in-total { background-color: var(--gray-200); font-weight: 700; font-size: 1rem; }
-        .final-scorecard-table .grand-total { background-color: var(--gray-300); font-weight: 700; font-size: 1.1rem; }
-        
-        .player1-grand-total { background-color: var(--blue-100); }
-        .player2-grand-total { background-color: var(--green-100); }
-
-        .share-button-container {
-            margin-top: 1.5rem;
-            background-color: var(--white);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-        }
-
-        .action-button, .back-button {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            font-weight: 700;
-            font-size: 1.125rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .action-button {
-            background-color: var(--blue-500);
-            color: var(--white);
-            margin-bottom: 0.75rem;
-        }
-        .action-button:disabled {
-            background-color: var(--gray-300);
-            cursor: not-allowed;
-        }
-
-        .download-button {
-            background-color: var(--green-500);
-        }
-
-        .back-button {
-            background-color: var(--gray-500);
-            color: var(--white);
-        }
-
-        /* Mobile adjustments */
-        @media (max-width: 640px) {
-            .app-header {
-                padding: 0.75rem;
-            }
-            .nine-selector {
-                top: 125px; /* Adjust sticky top position */
-            }
-            .main-content {
-                padding: 0.75rem;
-            }
-            .scorecard-table th, .scorecard-table td {
-                padding: 0.4rem;
-                font-size: 0.875rem;
-            }
-            .score-cell, .par-cell {
-                font-size: 1rem;
-                padding: 0.4rem;
-            }
-            .final-scorecard-table th, .final-scorecard-table td {
-                padding: 0.3rem;
-                font-size: 0.75rem;
-            }
-        }
-    </style>
+.sbc{display:flex;flex-direction:column;gap:.6rem;margin-top:1.25rem}
+.ab{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.85rem;border-radius:.75rem;border:none;cursor:pointer;font-weight:600;font-size:1rem;background:var(--g500);color:var(--w);box-shadow:0 4px 6px rgba(0,0,0,.1)}
+.ab:hover{background:var(--g600)}.ab svg{flex-shrink:0}
+.db{background:var(--b600)}.db:hover{background:var(--b700)}
+.bb{width:100%;padding:.85rem;border-radius:.75rem;border:2px solid var(--gr300);background:var(--w);cursor:pointer;font-weight:600;font-size:1rem;color:var(--gr600)}
+.bb:hover{background:var(--gr100)}
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin .6s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:480px){
+.st th{font-size:.55rem;padding:.35rem .03rem}.st td{font-size:.7rem;padding:.25rem .05rem}
+.sc,.pac{font-size:.85rem;padding:.25rem}.stb-pts{font-size:.5rem}.fora-dots{font-size:.35rem}
+.tc .sd2{font-size:1.4rem}.fst{font-size:.55rem}.fst th:first-child,.fst td:first-child{font-size:.45rem}
+.pi{font-size:.75rem;padding:.25rem .1rem}.hcp-in{font-size:.65rem;padding:.2rem}
+}
+</style>
 </head>
 <body>
+<div id="app">
+<div id="game-screen">
+<header class="hdr"><div class="hdr-in">
+<div class="ttl">
+<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="60" rx="12" fill="#16a34a"/><g fill="white"><path d="M43 14v26M43 28l9-4-9-4" stroke="white" stroke-width="2" fill="none"/><path d="M38 40c0-3 12-3 12 0a6 3 0 01-12 0z"/><path d="M16 14a3 3 0 00-3 3v15a3 3 0 003 3h13a3 3 0 003-3V17a3 3 0 00-3-3zm1 6l2 2 4-4m-6 8h11m-11 4h7" stroke="white" stroke-width="2" fill="none"/><circle cx="25" cy="41" r="10"/><g fill="#16a34a" transform="translate(25,41)"><circle r="1"/><circle cx="-5" r="1"/><circle cx="5" r="1"/><circle cy="-5" r="1"/><circle cy="5" r="1"/><circle cx="-3.5" cy="-3.5" r="1"/><circle cx="3.5" cy="3.5" r="1"/><circle cx="3.5" cy="-3.5" r="1"/><circle cx="-3.5" cy="3.5" r="1"/></g></g></svg>
+<h1>Golf Tracker</h1>
+</div>
+<div class="row1">
+<input type="date" id="gDate" class="date-in">
+<div class="csel-w"><select id="cSel" class="csel">
+<option value="">— Ручной ввод Par —</option>
+<optgroup label="🌴 Краснодарский край">
+<option value="gelendzhik">Геленджик Гольф Резорт</option>
+<option value="raevsky">Раевский (9×2)</option>
+</optgroup>
+<optgroup label="🏙 Москва и МО">
+<option value="skolkovo">Сколково</option>
+<option value="agalarov">Агаларов Golf & CC</option>
+<option value="links">Links National</option>
+<option value="tseleevo">Целеево Golf & Polo</option>
+<option value="moscow_cc">Moscow Country Club</option>
+<option value="forest_hills">Forest Hills</option>
+<option value="pestovo">Пестово Golf & Yacht</option>
+</optgroup>
+<optgroup label="🏛 Санкт-Петербург">
+<option value="peterhof">Петергоф</option>
+</optgroup>
+<optgroup label="🕌 Татарстан">
+<option value="sviyaga">Свияжские Холмы</option>
+</optgroup>
+<optgroup label="🏔 Тверская обл.">
+<option value="zavidovo">Завидово PGA National</option>
+</optgroup>
+</select></div>
+</div>
+<div id="cInfo" class="cinfo"></div>
+<div class="row2">
+<button class="mode-b" id="mGross" onclick="setMode('gross')">Gross</button>
+<button class="mode-b" id="mStb" onclick="setMode('stableford')">Stableford</button>
+<div class="sep"></div>
+<button class="pc-b" id="pc2" onclick="setPC(2)">2</button>
+<button class="pc-b" id="pc3" onclick="setPC(3)">3</button>
+<button class="pc-b" id="pc4" onclick="setPC(4)">4</button>
+</div>
+<div class="players-grid c2" id="pGrid">
+<div class="p-cell" id="pc1"><input type="text" id="pn1" class="pi pi-1" placeholder="Игрок 1"><input type="number" id="hc1" class="hcp-in" placeholder="HCP" min="0" max="54" inputmode="numeric"></div>
+<div class="p-cell" id="pc2c"><input type="text" id="pn2" class="pi pi-2" placeholder="Игрок 2"><input type="number" id="hc2" class="hcp-in" placeholder="HCP" min="0" max="54" inputmode="numeric"></div>
+<div class="p-cell hidden" id="pc3c"><input type="text" id="pn3" class="pi pi-3" placeholder="Игрок 3"><input type="number" id="hc3" class="hcp-in" placeholder="HCP" min="0" max="54" inputmode="numeric"></div>
+<div class="p-cell hidden" id="pc4c"><input type="text" id="pn4" class="pi pi-4" placeholder="Игрок 4"><input type="number" id="hc4" class="hcp-in" placeholder="HCP" min="0" max="54" inputmode="numeric"></div>
+</div>
+</div></header>
 
-    <div id="app-container">
-        <div id="game-screen">
-            <header class="app-header">
-                <div class="header-content">
-                    <div class="title-container">
-                        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" class="app-logo">
-                            <rect width="60" height="60" rx="12" ry="12" fill="#16a34a"/>
-                            <g fill="white" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M43 14 L43 40 M43 28 L52 24 L43 20" stroke="white" stroke-width="2" fill="none"/>
-                                <path d="M38 40 C 38 37, 50 37, 50 40 A 6 3 0 0 1 38 40 Z" />
-                            
-                                <path d="M16 14 C 14.343 14 13 15.343 13 17 L 13 32 C 13 33.657 14.343 35 16 35 L 29 35 C 30.657 35 32 33.657 32 32 L 32 17 C 32 15.343 30.657 14 29 14 L 16 14 Z M 17 20 L 19 22 L 23 18 M 17 26 L 28 26 M 17 30 L 24 30" stroke="white" stroke-width="2" fill="none" />
-                            
-                                <circle cx="25" cy="41" r="10"/>
-                                <g fill="#16a34a" transform="translate(25, 41)">
-                                    <circle cx="0" cy="0" r="1"/>
-                                    <circle cx="-5" cy="0" r="1"/><circle cx="5" cy="0" r="1"/>
-                                    <circle cx="0" cy="-5" r="1"/><circle cx="0" cy="5" r="1"/>
-                                    <circle cx="-3.5" cy="-3.5" r="1"/><circle cx="3.5" cy="3.5" r="1"/>
-                                    <circle cx="3.5" cy="-3.5" r="1"/><circle cx="-3.5" cy="3.5" r="1"/>
-                                </g>
-                            </g>
-                        </svg>
-                        <h1 class="app-title">Golf Tracker</h1>
-                    </div>
-                    <div style="text-align: center; font-size: 0.875rem; margin-bottom: 0.5rem; opacity: 0.9;">Дата игры</div>
-                    <input type="date" id="gameDate" class="date-input">
-                    <div class="player-inputs">
-                        <input type="text" id="player1Name" class="player-input" placeholder="Имя (игрок 1)">
-                        <input type="text" id="player2Name" class="player-input" placeholder="Имя (игрок 2)">
-                    </div>
-                </div>
-            </header>
+<div class="nine-sel"><div class="nine-in">
+<button id="n0">Лунки 1-9</button><button id="n1">Лунки 10-18</button>
+</div></div>
 
-            <div class="nine-selector">
-                <div class="nine-selector-content">
-                    <button id="nine-0-btn">Лунки 1-9</button>
-                    <div class="spacer"></div>
-                    <button id="nine-1-btn">Лунки 10-18</button>
-                </div>
-            </div>
+<main class="main">
+<div class="card"><table class="st"><thead id="sHead"></thead><tbody id="sBody"></tbody></table></div>
+<div class="card tc" id="tCard"></div>
+<div class="card leg" id="legCard">
+<div class="leg-t">Цветовая шкала:</div>
+<div class="leg-g">
+<div class="leg-i"><div class="leg-c" style="background:linear-gradient(135deg,#fbbf24,#d97706)"></div><span>HiO</span></div><div class="leg-i"><div class="leg-c" style="background:#7c3aed"></div><span>Eagle</span></div>
+<div class="leg-i"><div class="leg-c" style="background:var(--b500)"></div><span>Birdie</span></div>
+<div class="leg-i"><div class="leg-c" style="background:var(--g500)"></div><span>Par</span></div>
+<div class="leg-i"><div class="leg-c" style="background:#92400e"></div><span>Bogey</span></div>
+<div class="leg-i"><div class="leg-c" style="background:var(--r500)"></div><span>Double</span></div>
+<div class="leg-i"><div class="leg-c" style="background:#9ca3af"></div><span>Triple</span></div><div class="leg-i"><div class="leg-c" style="background:#6b7280"></div><span>Quad</span></div><div class="leg-i"><div class="leg-c" style="background:var(--bk)"></div><span>Quint+</span></div>
+</div>
+<div class="stb-leg" id="stbLeg">
+<div class="leg-t">Stableford (нетто):</div>
+<div class="stb-lg">
+<div class="stb-li">Alb 5</div><div class="stb-li">Eagle 4</div><div class="stb-li">Birdie 3</div>
+<div class="stb-li">Par 2</div><div class="stb-li">Bogey 1</div><div class="stb-li">Dbl+ 0</div>
+</div>
+<div style="font-size:.6rem;color:var(--gr500);margin-top:.35rem;text-align:center">● = форовый удар по SI лунки · Цвет ячейки = нетто результат</div>
+</div>
+</div>
+<button id="finBtn" class="fin-btn">Завершить игру</button>
+</main>
+</div>
 
-            <main class="main-content container">
-                <div class="card">
-                    <table class="scorecard-table">
-                        <thead>
-                            <tr>
-                                <th class="hole-col">Лунка</th>
-                                <th class="par-col">Par</th>
-                                <th id="player1-header">Игрок 1</th>
-                                <th id="player2-header">Игрок 2</th>
-                            </tr>
-                        </thead>
-                        <tbody id="scorecard-body">
-                            </tbody>
-                    </table>
-                </div>
+<div id="eScreen" class="hidden">
+<div class="es"><div class="es-in">
+<div id="capArea" class="cap">
+<div style="text-align:center"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="width:50px;height:50px;border-radius:8px"><rect width="60" height="60" rx="12" fill="#16a34a"/><g fill="white"><path d="M43 14v26M43 28l9-4-9-4" stroke="white" stroke-width="2" fill="none"/><path d="M38 40c0-3 12-3 12 0a6 3 0 01-12 0z"/><path d="M16 14a3 3 0 00-3 3v15a3 3 0 003 3h13a3 3 0 003-3V17a3 3 0 00-3-3zm1 6l2 2 4-4m-6 8h11m-11 4h7" stroke="white" stroke-width="2" fill="none"/><circle cx="25" cy="41" r="10"/><g fill="#16a34a" transform="translate(25,41)"><circle r="1"/><circle cx="-5" r="1"/><circle cx="5" r="1"/><circle cy="-5" r="1"/><circle cy="5" r="1"/><circle cx="-3.5" cy="-3.5" r="1"/><circle cx="3.5" cy="3.5" r="1"/><circle cx="3.5" cy="-3.5" r="1"/><circle cx="-3.5" cy="3.5" r="1"/></g></g></svg></div>
+<h2 class="es-t">Scorecard</h2>
+<div id="fCN" class="fcn"></div>
+<div id="fDate" style="text-align:center;color:var(--gr600);margin-bottom:.75rem;font-weight:600;font-size:.85rem"></div>
+<div id="fTables"></div>
+<div id="fSummary"></div>
+</div>
+<div class="sbc">
+<button id="shareBtn" class="ab"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Поделиться</button>
+<button id="dlBtn" class="ab db"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Сохранить</button>
+<button id="backBtn" class="bb">Назад к игре</button>
+</div>
+<div style="text-align:center;color:var(--gr500);font-size:.65rem;padding-top:1.25rem">©Евгений Славянский, 13.10.2025</div>
+</div></div>
+</div>
+</div>
 
-                <div class="card totals-card" id="totals-card">
-                    </div>
+<div id="parMod" class="mo hidden"><div class="mc">
+<div class="mh"><h3 class="mt">Выберите Par</h3><button class="mx" onclick="closePar()">×</button></div>
+<div class="pg"><button onclick="setPar(3)">3</button><button onclick="setPar(4)">4</button><button onclick="setPar(5)">5</button></div>
+</div></div>
 
-                <div class="card legend-card">
-                     <div class="legend-title">Цветовая шкала:</div>
-                     <div class="legend-grid">
-                         <div class="legend-item">
-                             <div class="legend-color-box" style="background-color: var(--red-500);"></div>
-                             <span>Пар -1 (Birdie)</span>
-                         </div>
-                         <div class="legend-item">
-                             <div class="legend-color-box" style="background-color: var(--blue-500);"></div>
-                             <span>Пар (Par)</span>
-                         </div>
-                         <div class="legend-item">
-                             <div class="legend-color-box" style="background-color: var(--green-500);"></div>
-                             <span>Пар +1 (Bogey)</span>
-                         </div>
-                         <div class="legend-item">
-                             <div class="legend-color-box" style="background-color: var(--gray-500);"></div>
-                             <span>Пар +2 (Double)</span>
-                         </div>
-                         <div class="legend-item">
-                             <div class="legend-color-box" style="background-color: var(--black);"></div>
-                             <span>Пар +3+ (Triple+)</span>
-                         </div>
-                    </div>
-                </div>
+<div id="numMod" class="mo hidden"><div class="mc">
+<div class="mh"><h3 id="numTitle" class="mt"></h3><button class="mx" onclick="closeNum()">×</button></div>
+<div id="foraInfo" class="fora-info hidden"></div>
+<div id="numGrid" class="ng"></div>
+</div></div>
 
-                <div style="margin-top: 1rem;">
-                    <button id="finish-game-btn" class="finish-button">Завершить игру</button>
-                </div>
-            </main>
-        </div>
+<script>
+const C={
+gelendzhik:{n:'Геленджик Гольф Резорт',p:[4,3,4,4,5,4,4,3,5,4,3,4,4,4,5,5,3,4],si:[7,15,3,11,1,9,5,17,13,8,16,4,12,10,2,6,18,14],i:'18 лунок · Par 72 · Dave Thomas'},
+raevsky:{n:'Раевский',p:[4,4,5,3,5,4,3,4,4,4,4,5,3,5,4,3,4,4],si:[9,5,1,15,3,11,17,7,13,10,6,2,16,4,12,18,8,14],i:'9×2 · Par 72 · SI: нечёт/чёт'},
+skolkovo:{n:'Сколково',p:[4,3,5,3,5,4,4,5,3,4,3,5,4,4,4,4,3,5],si:[10,18,4,14,2,6,12,16,8,9,17,13,3,7,1,11,15,5],i:'18 лунок · Par 72 · Jack Nicklaus'},
+agalarov:{n:'Агаларов Golf & CC',p:[5,4,4,3,4,3,5,4,4,4,5,4,4,4,3,4,3,5],si:[9,13,3,17,5,15,1,7,11,8,12,14,4,16,10,2,18,6],i:'18 лунок · Par 72 · Robert Trent Jones II'},
+links:{n:'Links National',p:[5,4,3,5,4,4,4,3,5,5,3,5,4,3,4,4,3,4],si:[5,13,17,1,7,15,3,9,11,2,8,4,12,18,6,14,10,16],i:'18 лунок · Par 72 · Jack Nicklaus'},
+tseleevo:{n:'Целеево Golf & Polo',p:[4,4,3,5,4,3,4,5,4,4,4,4,3,4,5,3,5,4],si:[13,9,15,1,17,5,11,7,3,10,16,2,8,18,4,12,14,6],i:'18 лунок · Par 72'},
+moscow_cc:{n:'Moscow Country Club',p:[4,5,4,3,5,4,4,3,4,4,3,4,4,4,5,3,5,4],si:[11,3,7,15,1,9,5,17,13,10,16,8,4,14,2,18,6,12],i:'18 лунок · Par 72 · Robert Trent Jones Jr.'},
+forest_hills:{n:'Forest Hills',p:[4,4,3,4,5,3,5,4,4,4,5,3,5,4,4,4,3,4],si:[5,15,11,3,7,17,1,13,9,8,4,18,2,12,16,14,10,6],i:'18 лунок · Par 72'},
+pestovo:{n:'Пестово Golf & Yacht',p:[4,4,5,3,4,4,4,3,5,5,4,4,3,4,5,4,3,4],si:[5,13,9,11,1,15,3,7,17,12,16,2,18,4,8,14,10,6],i:'18 лунок · Par 72 · Dave Thomas'},
+peterhof:{n:'Петергоф',p:[5,3,4,5,4,4,3,4,4,4,4,5,4,3,5,3,4,4],si:[2,14,18,6,4,12,8,16,10,5,1,9,17,13,11,15,7,3],i:'18 лунок · Par 72 · Cynthia Dye McGarey'},
+sviyaga:{n:'Свияжские Холмы',p:[4,3,4,4,4,3,5,3,4,5,4,5,4,3,5,4,4,4],si:[7,13,3,9,11,17,1,15,5,4,14,2,10,16,6,8,18,12],i:'18 лунок · Par 72'},
+zavidovo:{n:'Завидово PGA National',p:[4,4,4,3,5,4,3,4,5,4,4,3,4,5,4,4,3,5],si:[11,5,9,15,1,3,17,13,7,10,6,16,8,2,14,4,18,12],i:'18 лунок · Par 72 · Championship'}
+};
+const PK=['p1','p2','p3','p4'],PD=['Игрок 1','Игрок 2','Игрок 3','Игрок 4'];
+const S={nine:0,pc:2,mode:'gross',names:['','','',''],hcp:[0,0,0,0],course:'',
+scores:{p1:Array(18).fill(null),p2:Array(18).fill(null),p3:Array(18).fill(null),p4:Array(18).fill(null)},
+pars:Array(18).fill(null),si:Array(18).fill(null),
+date:new Date().toISOString().split('T')[0],showEmail:false,editPar:null,editScore:null};
+const $=id=>document.getElementById(id);
+const gn=i=>S.names[i]||PD[i];
+const tot=a=>a.reduce((s,v)=>s+(v||0),0);
 
-        <div id="email-screen" class="hidden">
-             <div class="email-screen-container">
-                 <div class="container">
-                     <div id="scorecard-capture-area" style="padding: 1rem; background-color: var(--white); border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);">
-                         <div style="text-align: center; margin-bottom: 1rem;">
-                             <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="width: 60px; height: 60px; border-radius: 8px;">
-                                 <rect width="60" height="60" rx="12" ry="12" fill="#16a34a"/>
-                                 <g fill="white" stroke-linecap="round" stroke-linejoin="round">
-                                     <path d="M43 14 L43 40 M43 28 L52 24 L43 20" stroke="white" stroke-width="2" fill="none"/>
-                                     <path d="M38 40 C 38 37, 50 37, 50 40 A 6 3 0 0 1 38 40 Z" />
-                                
-                                     <path d="M16 14 C 14.343 14 13 15.343 13 17 L 13 32 C 13 33.657 14.343 35 16 35 L 29 35 C 30.657 35 32 33.657 32 32 L 32 17 C 32 15.343 30.657 14 29 14 L 16 14 Z M 17 20 L 19 22 L 23 18 M 17 26 L 28 26 M 17 30 L 24 30" stroke="white" stroke-width="2" fill="none" />
-                                
-                                     <circle cx="25" cy="41" r="10"/>
-                                     <g fill="#16a34a" transform="translate(25, 41)">
-                                         <circle cx="0" cy="0" r="1"/>
-                                         <circle cx="-5" cy="0" r="1"/><circle cx="5" cy="0" r="1"/>
-                                         <circle cx="0" cy="-5" r="1"/><circle cx="0" cy="5" r="1"/>
-                                         <circle cx="-3.5" cy="-3.5" r="1"/><circle cx="3.5" cy="3.5" r="1"/>
-                                         <circle cx="3.5" cy="-3.5" r="1"/><circle cx="-3.5" cy="3.5" r="1"/>
-                                     </g>
-                                 </g>
-                             </svg>
-                         </div>
-                         <h2 class="email-title">Scorecard</h2>
-                         <div id="final-game-date" style="text-align: center; color: var(--gray-600); margin-top: -1rem; margin-bottom: 1rem; font-weight: 600;"></div>
-                         <div id="final-scorecard-tables-container">
-                             </div>
-                         <div id="final-summary-legend"></div>
-                     </div>
-                     
-                     <div class="share-button-container">
-                         <button id="share-btn" class="action-button">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-                             Поделиться
-                         </button>
-                         <button id="download-btn" class="action-button download-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                             Сохранить Scorecard
-                         </button>
-                         <button id="back-to-game-btn" class="back-button">Назад к игре</button>
-                     </div>
-                     
-                     <div style="text-align: center; color: var(--gray-500); font-size: 0.75rem; padding-top: 1.5rem;">
-                         ©Евгений Славянский, 13.10.2025
-                     </div>
-                 </div>
-             </div>
-        </div>
-    </div>
+// GROSS color: score vs raw par
+function sccGross(s,p){if(s===1&&p===3)return'shi';
+  if(!s||!p)return'sd';const d=s-p;
+  if(d<=-2)return'se';if(d===-1)return'sb';if(d===0)return'sp';if(d===1)return'sg';if(d===2)return'sdb';const ov=d-2;return ov<=1?'str1':ov===2?'str2':ov===3?'str3':'str4';
+}
 
-    <div id="par-selector" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Выберите Par</h3>
-                <button class="modal-close-btn" onclick="closeParSelector()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-            <div class="par-grid">
-                <button onclick="selectParValue(3)">3</button>
-                <button onclick="selectParValue(4)">4</button>
-                <button onclick="selectParValue(5)">5</button>
-            </div>
-        </div>
-    </div>
+// NETTO color for Stableford: score vs (par + extra strokes)
+function sccNetto(s,p,hcp,si){if(s===1&&p===3)return'shi';
+  if(!s||!p)return'sd';
+  const ex=extraSt(hcp,si);
+  const nettoPar=p+ex;
+  const d=s-nettoPar;
+  if(d<=-2)return'se';if(d===-1)return'sb';if(d===0)return'sp';if(d===1)return'sg';if(d===2)return'sdb';const ov=d-2;return ov<=1?'str1':ov===2?'str2':ov===3?'str3':'str4';
+}
 
-    <div id="number-selector" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="number-selector-title" class="modal-title">Выберите счет</h3>
-                <button class="modal-close-btn" onclick="closeNumberSelector()">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-            <div id="number-selector-grid" class="number-grid">
-                </div>
-        </div>
-    </div>
+function extraSt(hcp,si){if(hcp<=0||!si)return 0;let x=0;if(si<=hcp)x++;if(hcp>18&&si<=(hcp-18))x++;if(hcp>36&&si<=(hcp-36))x++;return x}
+function stbPts(gross,par,hcp,si){if(!gross||!par||!si)return null;const net=gross-extraSt(hcp,si)-par;if(net<=-3)return 5;if(net===-2)return 4;if(net===-1)return 3;if(net===0)return 2;if(net===1)return 1;return 0}
+function getStb(pi,h){return stbPts(S.scores[PK[pi]][h],S.pars[h],S.hcp[pi]||0,S.si[h])}
 
-    <script>
-        // --- STATE MANAGEMENT ---
-        const state = {
-            currentNine: 0,
-            player1Name: '',
-            player2Name: '',
-            gameDate: new Date().toISOString().split('T')[0],
-            // ИЗМЕНЕНИЕ 1: Изначально все значения Par равны null (не заданы)
-            parValues: Array(18).fill(null),
-            scores: {
-                player1: Array(18).fill(null),
-                player2: Array(18).fill(null)
-            },
-            editingPar: null, // hole index
-            editingScore: null, // { player: 'player1', hole: 0 }
-            showEmailScreen: false,
-        };
+function getCellClass(sc,par,pi,holeIdx){
+  if(S.mode==='stableford') return sccNetto(sc,par,S.hcp[pi]||0,S.si[holeIdx]);
+  return sccGross(sc,par);
+}
 
-        // --- DOM ELEMENTS ---
-        const dom = {
-            gameScreen: document.getElementById('game-screen'),
-            emailScreen: document.getElementById('email-screen'),
-            gameDate: document.getElementById('gameDate'),
-            player1Name: document.getElementById('player1Name'),
-            player2Name: document.getElementById('player2Name'),
-            nine0Btn: document.getElementById('nine-0-btn'),
-            nine1Btn: document.getElementById('nine-1-btn'),
-            player1Header: document.getElementById('player1-header'),
-            player2Header: document.getElementById('player2-header'),
-            scorecardBody: document.getElementById('scorecard-body'),
-            totalsCard: document.getElementById('totals-card'),
-            finishGameBtn: document.getElementById('finish-game-btn'),
-            backToGameBtn: document.getElementById('back-to-game-btn'),
-            shareBtn: document.getElementById('share-btn'),
-            downloadBtn: document.getElementById('download-btn'),
-            finalScorecardTablesContainer: document.getElementById('final-scorecard-tables-container'),
-            finalSummaryLegend: document.getElementById('final-summary-legend'),
-            parSelector: document.getElementById('par-selector'),
-            numberSelector: document.getElementById('number-selector'),
-            numberSelectorTitle: document.getElementById('number-selector-title'),
-            numberSelectorGrid: document.getElementById('number-selector-grid'),
-        };
+function setMode(m){S.mode=m;$('mGross').className='mode-b'+(m==='gross'?' act':'');$('mStb').className='mode-b'+(m==='stableford'?' act':'');document.querySelectorAll('.hcp-in').forEach(el=>el.style.display=m==='stableford'?'':'none');$('stbLeg').style.display=m==='stableford'?'block':'none';render()}
+function setPC(c){S.pc=c;['pc1','pc2c','pc3c','pc4c'].forEach((id,i)=>$(id).classList.toggle('hidden',i>=c));$('pGrid').className='players-grid c'+c;document.querySelectorAll('.pc-b').forEach(b=>b.classList.remove('act'));$('pc'+c).classList.add('act');render()}
+function selCourse(id){S.course=id;if(id&&C[id]){S.pars=[...C[id].p];S.si=[...C[id].si];$('cInfo').textContent=C[id].i}else{S.si=[1,3,5,7,9,11,13,15,17,2,4,6,8,10,12,14,16,18];$('cInfo').textContent='Ручной ввод Par · SI по умолчанию'}render()}
 
-        // --- UTILITY FUNCTIONS ---
-        const calculateTotal = (playerScores) => playerScores.reduce((sum, score) => sum + (score || 0), 0);
-        const getScoreColorClass = (score, par) => {
-            if (!score || !par) return 'score-default';
-            const diff = score - par;
-            if (diff === -1) return 'score-birdie';
-            if (diff === 0) return 'score-par';
-            if (diff === 1) return 'score-bogey';
-            if (diff === 2) return 'score-double';
-            return 'score-triple';
-        };
+function render(){
+$('gDate').value=S.date;$('n0').className=S.nine===0?'act':'ina';$('n1').className=S.nine===1?'act':'ina';
+const pc=S.pc,isS=S.mode==='stableford',s0=S.nine*9,s1=s0+9;
+let hd='<tr><th class="hc">№</th><th class="pc">Par</th>';
+if(isS)hd+='<th class="sic">SI</th>';
+for(let p=0;p<pc;p++){const nm=gn(p).length>7?gn(p).slice(0,7)+'…':gn(p);hd+=`<th>${nm}${isS?'<br><span style="font-size:.45rem;opacity:.65">HCP '+(S.hcp[p]||0)+'</span>':''}</th>`}
+hd+='</tr>';$('sHead').innerHTML=hd;
+const tb=$('sBody');tb.innerHTML='';
+for(let i=s0;i<s1;i++){const r=document.createElement('tr'),pv=S.pars[i],si=S.si[i];
+let h=`<td style="background:var(--p100);font-weight:700">${i+1}</td>`;
+h+=`<td style="background:var(--i50)"><div class="pac${S.course&&C[S.course]?' auto':''}" onclick="openPar(${i})">${pv!==null?pv:'<span class="ph">P</span>'}</div></td>`;
+if(isS)h+=`<td style="background:#f3e8ff;font-weight:700;font-size:.8rem;color:#6d28d9">${si||'-'}</td>`;
+for(let p=0;p<pc;p++){const k=PK[p],sc=S.scores[k][i],ex=isS?extraSt(S.hcp[p]||0,si):0;
+let stbH='';if(isS&&sc&&pv){const pts=getStb(p,i);stbH=`<span class="stb-pts">${pts}pts</span>`}
+const dots=ex>0?`<span class="fora-dots">${'●'.repeat(ex)}</span>`:'';
+const cls=getCellClass(sc,pv,p,i);
+h+=`<td><div class="sc ${cls}${ex>0?' has-fora':''}" onclick="openNum('${k}',${i},${p})">${dots}${sc||'-'}${stbH}</div></td>`}
+r.innerHTML=h;tb.appendChild(r)}
+const tr=document.createElement('tr');tr.className='trow';
+let tc=`<td>${S.nine===0?'OUT':'IN'}</td><td style="font-size:.9rem">${tot(S.pars.slice(s0,s1))}</td>`;
+if(isS)tc+='<td></td>';
+for(let p=0;p<pc;p++){const g=tot(S.scores[PK[p]].slice(s0,s1));
+if(isS){let sb=0;for(let h=s0;h<s1;h++){const pt=getStb(p,h);if(pt!==null)sb+=pt}tc+=`<td style="font-size:.85rem">${g}<span style="display:block;font-size:.6rem;opacity:.85">STB: ${sb}</span></td>`}
+else tc+=`<td style="font-size:1rem">${g}</td>`}
+tr.innerHTML=tc;tb.appendChild(tr);
+const tC=$('tCard');tC.className=`card tc p${pc}`;const pT=tot(S.pars.slice(s0,s1));let th='';
+for(let p=0;p<pc;p++){const pt=tot(S.scores[PK[p]].slice(s0,s1)),tp=pt-pT;
+let sl='';if(isS){let sb=0;for(let h=s0;h<s1;h++){const pts=getStb(p,h);if(pts!==null)sb+=pts}sl=`<div class="stb-t">⭐ ${sb} STB</div>`}
+th+=`<div><div class="sd2 p${p+1}c">${pt}</div><div class="pn">${gn(p)}</div><div class="tp p${p+1}d">К пару: ${tp>0?'+':''}${tp}</div>${sl}</div>`}
+tC.innerHTML=th;
+$('game-screen').classList.toggle('hidden',S.showEmail);$('eScreen').classList.toggle('hidden',!S.showEmail);if(S.showEmail)renderEmail()}
 
-        // --- RENDER FUNCTION ---
-        function render() {
-            // Update inputs
-            dom.gameDate.value = state.gameDate;
-            if (document.activeElement !== dom.player1Name) {
-                dom.player1Name.value = state.player1Name;
-            }
-             if (document.activeElement !== dom.player2Name) {
-                dom.player2Name.value = state.player2Name;
-            }
+function renderEmail(){
+const pc=S.pc,isS=S.mode==='stableford';
+$('fCN').textContent=S.course&&C[S.course]?'⛳ '+C[S.course].n:'';
+$('fDate').textContent=new Date(S.date+'T00:00:00').toLocaleDateString('ru-RU');
+const pO=tot(S.pars.slice(0,9)),pI=tot(S.pars.slice(9,18));
+function bldT(s,lbl,grand){let h='<table class="fst"><thead><tr><th></th>';
+for(let i=0;i<9;i++)h+=`<th class="hh">${s+i+1}</th>`;h+=`<th class="oih">${lbl}</th>`;if(grand)h+='<th class="tth">TL</th>';h+='</tr></thead><tbody>';
+h+='<tr class="pr"><td style="font-weight:700">Par</td>';for(let i=0;i<9;i++)h+=`<td class="pcf">${S.pars[s+i]??'-'}</td>`;h+=`<td class="oit">${tot(S.pars.slice(s,s+9))}</td>`;if(grand)h+=`<td class="gt">${pO+pI}</td>`;h+='</tr>';
+if(isS){h+='<tr class="sir"><td style="font-weight:700;color:#6d28d9;font-size:.5rem">SI</td>';for(let i=0;i<9;i++)h+=`<td style="font-weight:600;color:#6d28d9">${S.si[s+i]||'-'}</td>`;h+='<td></td>';if(grand)h+='<td></td>';h+='</tr>'}
+for(let p=0;p<pc;p++){const k=PK[p],hcp=S.hcp[p]||0;h+=`<tr><td style="font-weight:700">${gn(p)}${isS?' ('+hcp+')':''}</td>`;
+let sN=0;for(let i=0;i<9;i++){const sc=S.scores[k][s+i],pts=isS?getStb(p,s+i):null;if(pts!==null)sN+=pts;const ex=isS?extraSt(hcp,S.si[s+i]):0;
+let cc='';if(ex>0)cc+=`<div style="font-size:.35rem;line-height:1">${'●'.repeat(ex)}</div>`;cc+=sc||'-';if(isS&&sc&&pts!==null)cc+=`<div style="font-size:.4rem;font-weight:600;opacity:.75">${pts}pt</div>`;
+const cls=getCellClass(sc,S.pars[s+i],p,s+i);
+h+=`<td class="${cls}">${cc}</td>`}const gN=tot(S.scores[k].slice(s,s+9));
+if(isS)h+=`<td class="oit">${gN}<div style="font-size:.45rem;color:#6d28d9">${sN}stb</div></td>`;else h+=`<td class="oit">${gN}</td>`;
+if(grand){const gAll=tot(S.scores[k]);if(isS){let sAll=0;for(let i=0;i<18;i++){const pt=getStb(p,i);if(pt!==null)sAll+=pt}h+=`<td class="gt p${p+1}gt">${gAll}<div style="font-size:.45rem;color:#6d28d9">${sAll}stb</div></td>`}else h+=`<td class="gt p${p+1}gt">${gAll}</td>`}h+='</tr>'}h+='</tbody></table>';return h}
+$('fTables').innerHTML=bldT(0,'OUT',false)+'<div style="margin-top:.75rem"></div>'+bldT(9,'IN',true);
+const tP=pO+pI;let sm=`<div class="card tc p${pc}" style="margin-top:.75rem">`;
+for(let p=0;p<pc;p++){const pt=tot(S.scores[PK[p]]),tp=pt-tP;let sl='';if(isS){let sb=0;for(let i=0;i<18;i++){const pts=getStb(p,i);if(pts!==null)sb+=pts}sl=`<div style="font-size:.8rem;font-weight:700;color:#6d28d9;margin-top:.15rem">⭐ ${sb} STB</div>`}
+sm+=`<div><div class="sd2 p${p+1}c">${tp>0?'+':''}${tp}</div><div class="pn">${gn(p)}</div>${sl}</div>`}sm+='</div>';$('fSummary').innerHTML=sm}
 
-            // Update headers
-            dom.player1Header.textContent = state.player1Name || 'Игрок 1';
-            dom.player2Header.textContent = state.player2Name || 'Игрок 2';
+function genImg(cb){html2canvas($('capArea'),{scale:2,useCORS:true,backgroundColor:'#ffffff'}).then(c=>c.toBlob(cb,'image/png'))}
+$('gDate').onchange=e=>{S.date=e.target.value};$('cSel').onchange=e=>selCourse(e.target.value);
+for(let i=1;i<=4;i++){$('pn'+i).oninput=()=>{for(let j=0;j<4;j++)S.names[j]=$('pn'+(j+1)).value.trim();render()};$('hc'+i).oninput=()=>{for(let j=0;j<4;j++){let v=parseInt($('hc'+(j+1)).value)||0;S.hcp[j]=Math.max(0,Math.min(54,v))}render()}}
+$('n0').onclick=()=>{S.nine=0;render()};$('n1').onclick=()=>{S.nine=1;render()};
+$('finBtn').onclick=()=>{S.showEmail=true;render()};$('backBtn').onclick=()=>{S.showEmail=false;render()};
+$('shareBtn').onclick=()=>{$('shareBtn').innerHTML='<span class="spinner"></span>';genImg(b=>{const f=new File([b],`scorecard-${S.date}.png`,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({title:'Scorecard',files:[f]}).catch(()=>{}).finally(()=>{$('shareBtn').innerHTML='Поделиться'});else $('shareBtn').innerHTML='Поделиться'})};
+$('dlBtn').onclick=()=>{$('dlBtn').innerHTML='<span class="spinner"></span>';genImg(b=>{const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=`scorecard-${S.date}.png`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);$('dlBtn').innerHTML='Сохранить'})};
 
-            // Update nine selector buttons
-            dom.nine0Btn.className = state.currentNine === 0 ? 'active' : 'inactive';
-            dom.nine1Btn.className = state.currentNine === 1 ? 'active' : 'inactive';
+window.openPar=h=>{S.editPar=h;$('parMod').classList.remove('hidden')};
+window.closePar=()=>{S.editPar=null;$('parMod').classList.add('hidden')};
+window.setPar=v=>{S.pars[S.editPar]=v;closePar();render()};
 
-            // Render scorecard rows
-            const startHole = state.currentNine * 9;
-            const endHole = startHole + 9;
-            dom.scorecardBody.innerHTML = ''; 
+window.openNum=(k,h,pi)=>{S.editScore={k,h};const par=S.pars[h],si=S.si[h],hcp=S.hcp[pi]||0,ex=S.mode==='stableford'?extraSt(hcp,si):0;
+const nettoPar=par?par+ex:null;
+$('numTitle').textContent=`Лунка ${h+1} · ${gn(pi)}`;const fi=$('foraInfo');
+if(S.mode==='stableford'&&par){fi.textContent=`Par ${par} · SI ${si}${ex>0?' · +'+ex+' фора · Нетто Par '+nettoPar:''}`;fi.classList.remove('hidden')}else fi.classList.add('hidden');
+const g=$('numGrid');g.innerHTML='';for(let i=1;i<=12;i++){const b=document.createElement('button');b.textContent=i;
+if(par){
+  const target=S.mode==='stableford'&&nettoPar?nettoPar:par;
+  const d=i-target;
+  if(i===1&&par===3){b.style.background='linear-gradient(135deg,#fbbf24,#f59e0b,#d97706)';b.style.color='#000'}else if(d<=-2)b.style.background='#7c3aed';else if(d===-1)b.style.background='var(--b500)';else if(d===0)b.style.background='var(--g500)';else if(d===1)b.style.background='#92400e';else if(d===2)b.style.background='var(--r500)';else if(d===3)b.style.background='#9ca3af';else if(d===4)b.style.background='#6b7280';else if(d===5)b.style.background='#374151';else if(d>5)b.style.background='var(--bk)';
+}
+b.onclick=()=>{S.scores[S.editScore.k][S.editScore.h]=i;closeNum();render()};g.appendChild(b)}$('numMod').classList.remove('hidden')};
+window.closeNum=()=>{S.editScore=null;$('numMod').classList.add('hidden')};
 
-            for (let i = startHole; i < endHole; i++) {
-                const row = document.createElement('tr');
-                
-                // ИЗМЕНЕНИЕ 2: Логика для отображения либо числа, либо подсказки "PAR"
-                const parValue = state.parValues[i];
-                const parCellContent = parValue !== null ? parValue : 'PAR';
-                const parCellClass = parValue !== null ? '' : 'par-cell-placeholder';
-                
-                row.innerHTML = `
-                    <td style="background-color: var(--purple-100); font-weight: 700;">${i + 1}</td>
-                    <td style="background-color: var(--indigo-50);">
-                        <div class="par-cell ${parCellClass}" onclick="openParSelector(${i})">${parCellContent}</div>
-                    </td>
-                    <td>
-                        <div class="score-cell ${getScoreColorClass(state.scores.player1[i], state.parValues[i])}" onclick="openNumberSelector('player1', ${i})">
-                            ${state.scores.player1[i] || '-'}
-                        </div>
-                    </td>
-                    <td>
-                        <div class="score-cell ${getScoreColorClass(state.scores.player2[i], state.parValues[i])}" onclick="openNumberSelector('player2', ${i})">
-                            ${state.scores.player2[i] || '-'}
-                        </div>
-                    </td>
-                `;
-                dom.scorecardBody.appendChild(row);
-            }
-
-            // Render totals row
-            const currentNinePars = state.parValues.slice(startHole, endHole);
-            const player1CurrentScores = state.scores.player1.slice(startHole, endHole);
-            const player2CurrentScores = state.scores.player2.slice(startHole, endHole);
-            const totalRow = document.createElement('tr');
-            totalRow.className = 'total-row';
-            totalRow.innerHTML = `
-                <td>OUT</td>
-                <td style="font-size: 1.125rem;">${calculateTotal(currentNinePars)}</td>
-                <td style="font-size: 1.25rem;">${calculateTotal(player1CurrentScores)}</td>
-                <td style="font-size: 1.25rem;">${calculateTotal(player2CurrentScores)}</td>
-            `;
-            dom.scorecardBody.appendChild(totalRow);
-            
-            // Render totals card
-            const p1currentTotal = calculateTotal(player1CurrentScores);
-            const p2currentTotal = calculateTotal(player2CurrentScores);
-            const parCurrentTotal = calculateTotal(currentNinePars);
-            const p1toPar = p1currentTotal - parCurrentTotal;
-            const p2toPar = p2currentTotal - parCurrentTotal;
-            dom.totalsCard.innerHTML = `
-                <div>
-                    <div class="score-display player1-score">${p1currentTotal}</div>
-                    <div class="player-name">${state.player1Name || 'Игрок 1'}</div>
-                    <div class="to-par player1-par">К пару: ${p1toPar > 0 ? '+' : ''}${p1toPar}</div>
-                </div>
-                <div>
-                    <div class="score-display player2-score">${p2currentTotal}</div>
-                    <div class="player-name">${state.player2Name || 'Игрок 2'}</div>
-                    <div class="to-par player2-par">К пару: ${p2toPar > 0 ? '+' : ''}${p2toPar}</div>
-                </div>
-            `;
-
-            // Screen visibility
-            dom.gameScreen.classList.toggle('hidden', state.showEmailScreen);
-            dom.emailScreen.classList.toggle('hidden', !state.showEmailScreen);
-
-            if (state.showEmailScreen) {
-                renderEmailScreen();
-            }
-        }
-        
-        function renderEmailScreen() {
-            const container = dom.finalScorecardTablesContainer;
-            container.innerHTML = ''; 
-
-            document.getElementById('final-game-date').textContent = `Дата игры: ${new Date(state.gameDate + 'T00:00:00').toLocaleDateString('ru-RU')}`;
-
-            const parOut = calculateTotal(state.parValues.slice(0, 9));
-            const parIn = calculateTotal(state.parValues.slice(9, 18));
-            const p1Out = calculateTotal(state.scores.player1.slice(0, 9));
-            const p1In = calculateTotal(state.scores.player1.slice(9, 18));
-            const p2Out = calculateTotal(state.scores.player2.slice(0, 9));
-            const p2In = calculateTotal(state.scores.player2.slice(9, 18));
-
-            let outTableHTML = `
-                <table class="final-scorecard-table">
-                    <thead>
-                        <tr>
-                            <th>ЛУНКА</th>
-                            ${Array.from({ length: 9 }, (_, i) => `<th class="hole-header">${i + 1}</th>`).join('')}
-                            <th class="out-in-header">OUT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="par-row">
-                            <td style="font-weight: 700;">Par</td>
-                            ${state.parValues.slice(0, 9).map(p => `<td class="par-cell-final">${p !== null ? p : '-'}</td>`).join('')}
-                            <td class="out-in-total">${parOut}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 700;">${state.player1Name || 'Игрок 1'}</td>
-                            ${state.scores.player1.slice(0, 9).map((s, i) => `<td class="${getScoreColorClass(s, state.parValues[i])}">${s || '-'}</td>`).join('')}
-                            <td class="out-in-total">${p1Out}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 700;">${state.player2Name || 'Игрок 2'}</td>
-                            ${state.scores.player2.slice(0, 9).map((s, i) => `<td class="${getScoreColorClass(s, state.parValues[i])}">${s || '-'}</td>`).join('')}
-                            <td class="out-in-total">${p2Out}</td>
-                        </tr>
-                    </tbody>
-                </table>`;
-            
-            let inTableHTML = `
-                <table class="final-scorecard-table" style="margin-top: 1.5rem;">
-                    <thead>
-                        <tr>
-                            <th>ЛУНКА</th>
-                            ${Array.from({ length: 9 }, (_, i) => `<th class="hole-header">${i + 10}</th>`).join('')}
-                            <th class="out-in-header">IN</th>
-                            <th class="total-header">TL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="par-row">
-                            <td style="font-weight: 700;">Par</td>
-                            ${state.parValues.slice(9, 18).map(p => `<td class="par-cell-final">${p !== null ? p : '-'}</td>`).join('')}
-                            <td class="out-in-total">${parIn}</td>
-                            <td class="grand-total">${parOut + parIn}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 700;">${state.player1Name || 'Игрок 1'}</td>
-                            ${state.scores.player1.slice(9, 18).map((s, i) => `<td class="${getScoreColorClass(s, state.parValues[i + 9])}">${s || '-'}</td>`).join('')}
-                            <td class="out-in-total">${p1In}</td>
-                            <td class="grand-total player1-grand-total">${p1Out + p1In}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 700;">${state.player2Name || 'Игрок 2'}</td>
-                            ${state.scores.player2.slice(9, 18).map((s, i) => `<td class="${getScoreColorClass(s, state.parValues[i + 9])}">${s || '-'}</td>`).join('')}
-                            <td class="out-in-total">${p2In}</td>
-                            <td class="grand-total player2-grand-total">${p2Out + p2In}</td>
-                        </tr>
-                    </tbody>
-                </table>`;
-
-            container.innerHTML = outTableHTML + inTableHTML;
-            
-            const totalPar = parOut + parIn;
-            const p1Total = p1Out + p1In;
-            const p2Total = p2Out + p2In;
-            const p1TotalToPar = p1Total - totalPar;
-            const p2TotalToPar = p2Total - totalPar;
-            dom.finalSummaryLegend.innerHTML = `
-                 <div class="card totals-card" style="margin-top: 1rem;">
-                     <div>
-                         <div class="score-display player1-score">${p1TotalToPar > 0 ? '+' : ''}${p1TotalToPar}</div>
-                         <div class="player-name">${state.player1Name || 'Игрок 1'} (к пару)</div>
-                     </div>
-                     <div>
-                         <div class="score-display player2-score">${p2TotalToPar > 0 ? '+' : ''}${p2TotalToPar}</div>
-                         <div class="player-name">${state.player2Name || 'Игрок 2'} (к пару)</div>
-                     </div>
-                 </div>
-                 <div class="card legend-card" style="margin-top: 1rem;">
-                     <div class="legend-title">Легенда:</div>
-                     <div class="legend-grid">
-                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--red-500);"></div><span>Пар -1</span></div>
-                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--blue-500);"></div><span>Пар</span></div>
-                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--green-500);"></div><span>Пар +1</span></div>
-                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--gray-500);"></div><span>Пар +2</span></div>
-                         <div class="legend-item"><div class="legend-color-box" style="background-color: var(--black);"></div><span>Пар +3+</span></div>
-                     </div>
-                 </div>
-            `;
-        }
-        
-        // --- SHARING AND DOWNLOADING ---
-        function showLoadingState(buttonId) {
-            dom.shareBtn.disabled = true;
-            dom.downloadBtn.disabled = true;
-            const btn = document.getElementById(buttonId);
-            if (btn) btn.innerHTML = 'Генерация...';
-        }
-
-        function hideLoadingState() {
-            dom.shareBtn.disabled = false;
-            dom.downloadBtn.disabled = false;
-            dom.shareBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg> Поделиться`;
-            dom.downloadBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Сохранить Scorecard`;
-        }
-
-        function generateScorecardImage(callback) {
-            const captureArea = document.getElementById('scorecard-capture-area');
-            const cards = captureArea.querySelectorAll('.card');
-            cards.forEach(card => card.style.boxShadow = 'none');
-
-            html2canvas(captureArea, { scale: 2, useCORS: true, backgroundColor: '#ffffff' })
-                .then(canvas => {
-                    cards.forEach(card => card.style.boxShadow = ''); // Restore shadow
-                    canvas.toBlob(callback, 'image/png');
-                });
-        }
-
-        function handleDownload() {
-            showLoadingState('download-btn');
-            generateScorecardImage(blob => {
-                const url = URL.createObjectURL(blob);
-                const newWindow = window.open(url, '_blank');
-                if(!newWindow) { // Fallback for browsers that block popups
-                    const link = document.createElement('a');
-                    link.download = `scorecard-${state.gameDate}.png`;
-                    link.href = url;
-                    link.click();
-                    URL.revokeObjectURL(link.href);
-                }
-                hideLoadingState();
-            });
-        }
-
-        function handleShare(buttonId = 'share-btn') {
-            showLoadingState(buttonId);
-            generateScorecardImage(blob => {
-                 const file = new File([blob], `scorecard-${state.gameDate}.png`, { type: 'image/png' });
-                 const p1 = state.player1Name || 'Игрок 1';
-                 const p2 = state.player2Name || 'Игрок 2';
-                 const shareData = {
-                     title: `Scorecard: ${p1} vs ${p2}`,
-                     files: [file],
-                 };
-
-                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                      navigator.share(shareData)
-                          .catch((error) => {
-                              console.log('Sharing failed', error);
-                              if (error.name !== 'AbortError') {
-                                  console.error('Не удалось поделиться файлом. Попробуйте скачать изображение и отправить его вручную.');
-                              }
-                          })
-                          .finally(() => hideLoadingState());
-                 } else {
-                      console.error('Ваш браузер не поддерживает отправку файлов. Скачайте изображение и поделитесь им вручную.');
-                      hideLoadingState();
-                 }
-            });
-        }
-
-        // --- EVENT HANDLERS & ACTIONS ---
-        function handleNameChange() {
-            const name1 = dom.player1Name.value.trim();
-            const name2 = dom.player2Name.value.trim();
-
-            state.player1Name = name1;
-            state.player2Name = name2;
-
-            if (name1 && name1 === name2) {
-                dom.player1Name.classList.add('error');
-                dom.player2Name.classList.add('error');
-            } else {
-                dom.player1Name.classList.remove('error');
-                dom.player2Name.classList.remove('error');
-            }
-            render();
-        }
-
-        function setupEventListeners() {
-            dom.gameDate.addEventListener('change', (e) => state.gameDate = e.target.value);
-            dom.player1Name.addEventListener('input', handleNameChange);
-            dom.player2Name.addEventListener('input', handleNameChange);
-            dom.nine0Btn.addEventListener('click', () => {
-                state.currentNine = 0;
-                render();
-            });
-            dom.nine1Btn.addEventListener('click', () => {
-                state.currentNine = 1;
-                render();
-            });
-            dom.finishGameBtn.addEventListener('click', () => {
-                state.showEmailScreen = true;
-                render();
-            });
-            dom.backToGameBtn.addEventListener('click', () => {
-                state.showEmailScreen = false;
-                render();
-            });
-            dom.shareBtn.addEventListener('click', () => handleShare('share-btn'));
-            dom.downloadBtn.addEventListener('click', handleDownload);
-        }
-        
-        // Modal functions
-        window.openParSelector = (hole) => {
-            state.editingPar = hole;
-            dom.parSelector.classList.remove('hidden');
-        };
-
-        window.closeParSelector = () => {
-            state.editingPar = null;
-            dom.parSelector.classList.add('hidden');
-        };
-        
-        window.selectParValue = (value) => {
-            state.parValues[state.editingPar] = value;
-            closeParSelector();
-            render();
-        };
-
-        window.openNumberSelector = (player, hole) => {
-            state.editingScore = { player, hole };
-            const p1Name = state.player1Name || 'Игрок 1';
-            const p2Name = state.player2Name || 'Игрок 2';
-            dom.numberSelectorTitle.textContent = `Лунка ${hole + 1} - ${player === 'player1' ? p1Name : p2Name}`;
-            dom.numberSelectorGrid.innerHTML = '';
-            for (let i = 1; i <= 12; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                button.onclick = () => selectScoreValue(i);
-                dom.numberSelectorGrid.appendChild(button);
-            }
-            dom.numberSelector.classList.remove('hidden');
-        };
-
-        window.closeNumberSelector = () => {
-            state.editingScore = null;
-            dom.numberSelector.classList.add('hidden');
-        };
-        
-        window.selectScoreValue = (value) => {
-            const { player, hole } = state.editingScore;
-            state.scores[player][hole] = value;
-            closeNumberSelector();
-            render();
-        };
-
-        // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', () => {
-            setupEventListeners();
-            render();
-        });
-    </script>
-</body>
-</html>
+document.addEventListener('DOMContentLoaded',()=>{setMode('gross');setPC(2);S.si=[1,3,5,7,9,11,13,15,17,2,4,6,8,10,12,14,16,18];$('cInfo').textContent='Выберите поле или введите Par вручную';render()});
+</script>
+</body></html>
